@@ -1,7 +1,3 @@
-﻿  pch.cpp
-  YcBitBase.cpp
-  YcLockpick.cpp
-c:\users\dell\source\repos\yclockpick\yclockpick\yclockpick.cpp(8): error C2632: “int”后面的“int”非法
-c:\users\dell\source\repos\yclockpick\yclockpick\yclockpick.cpp(11): error C2143: 语法错误: 缺少“;”(在“return”的前面)
-  正在编译...
-  正在生成代码...
+﻿  YcLockpick.cpp
+c:\users\dell\source\repos\yclockpick\yclockpick\yclockpick.cpp(10): warning C4477: “printf”: 格式字符串“%x”需要类型“unsigned int”的参数，但可变参数 1 拥有了类型“bool *”
+  YcLockpick.vcxproj -> C:\Users\DELL\source\repos\YcLockpick\Debug\YcLockpick.exe

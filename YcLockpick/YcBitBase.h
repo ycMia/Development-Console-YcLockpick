@@ -42,20 +42,19 @@ class YcBiter
 {
 #define DEFAULT_CLASS_ID -1
 public:
-
 	~YcBiter();
 	YcBiter(int length,int id = DEFAULT_CLASS_ID);
-	YcBiter(int length,bool * inData, int id);//用于YcBiter::Clone();
+	YcBiter(int length,bool * inData, int id = DEFAULT_CLASS_ID);//用以克隆
 	
-	bool Widen_EmptySide(int n, bool mode);
+	bool Widen_EmptySide(int n, bool mode);//成功时返回tre
 	//mode == true时拓宽左边(值不变),mode == false时拓宽右边(低位向高位移动)
-	//成功时返回tre
-	bool Flush_bData(int n);
-	//成功时返回true
-	string GetRoughDataString();
+	bool Flush_bData(int n);//成功时返回true
+	
 	void CoverWrite(bool data[], int inLength);
-	void CoverWrite_S(string str);
-
+	void CoverWrite_RoughString(string str)
+	{
+		CoverWrite(strToBool_CWS(str), str.length());
+	}
 	void ForceWriteCurrent(bool v)
 	{
 		_bData[_current] = v;
@@ -66,6 +65,7 @@ public:
 		_current = n;
 		return true;
 	}
+	//将不会修改_current为小于0的值
 
 	void Debug_OutMsgShow(void)
 	{
@@ -95,5 +95,17 @@ private:
 	//辅助函数,将形如"1000100100"这类的string转为bool的数组
 	//-->CWS<-- 指CoverWrite_S,此函数在非特殊情况下应该只与
 	//YcBiter_CoverWrite_S或其他类似函数配合使用,所以我把它放在private中
-
+	string GetRoughDataString()
+	{
+		string dstr;
+		for (int i = 0; i < _length; i++)
+		{
+			if (_bData[i])
+				dstr += "1";
+			else
+				dstr += "0";
+		}
+		return dstr;
+	}
+	//返回形如"10001010"的字符串,而不是raw
 };

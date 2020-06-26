@@ -1,12 +1,14 @@
 ﻿#include "pch.h"
+
 #define DEBUG
 
 #include "YcBitBase.cpp"
-#include "YcBitBase.h"
 
 int main()
 {
-	YcBiter yb();
+	bool * b = new bool[30];
+	printf("0x%x\n", b);
+	YcBiter yb(30,b);
 	return 0;
 }
 
