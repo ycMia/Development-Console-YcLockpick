@@ -1,5 +1,16 @@
 ﻿#include "pch.h"
+#define DEBUG
 
+#include "YcBitBase.cpp"
+#include "YcBitBase.h"
+
+int main()
+{
+	YcBiter yb();
+	return 0;
+}
+
+#ifdef SAMPLE
 #define _CRT_SECURE_NO_WARNINGS
 
 #include<stdio.h>
@@ -20,7 +31,6 @@ using namespace std;
 
 //#define SHA256
 //#define SHA1
-#define RSA
 //#define MD5_32
 
 #ifdef SHA256
@@ -519,7 +529,7 @@ void printX() {//输出填充后的文本
 int S(unsigned int x, int n) {//循环左移
 	return x >> (32 - n) | (x << n);
 }
-void append(string m) {//文本的填充处理
+void WidenL(string m) {//文本的填充处理
 	Turn = (m.size() + 8) / 64 + 1;
 	X.resize(Turn * 64);
 	int i = 0;
@@ -573,7 +583,7 @@ void sha1(string text) {
 	C1 = C = 0x98badcfe;
 	D1 = D = 0x10325476;
 	E1 = E = 0xc3d2e1f0;
-	append(text);
+	WidenL(text);
 	printX();
 	for (int i = 0; i < Turn; i++) {
 		setW(X, i);
@@ -854,7 +864,7 @@ void MD5::final() {
 	padLen = (index < 56) ? (56 - index) : (120 - index);
 	update(PADDING, padLen);
 
-	/* Append length (before padding) */
+	/* WidenL length (before padding) */
 	update(bits, 8);
 
 	/* Store state in digest */
@@ -982,8 +992,8 @@ string MD5::bytesToHexString(const byte *input, size_t length) {
 		int t = input[i];
 		int a = t / 16;
 		int b = t % 16;
-		str.append(1, HEX[a]);
-		str.append(1, HEX[b]);
+		str.WidenL(1, HEX[a]);
+		str.WidenL(1, HEX[b]);
 	}
 	return str;
 }
@@ -1052,10 +1062,8 @@ int main() {
 #undef GG
 #undef HH
 #undef II
- 
+
 #endif //MD5_32
 //----------------------------------------------------------------//
-int main()
-{
-	return 0;
-}
+
+#endif
