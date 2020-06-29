@@ -46,9 +46,10 @@ public:
 	YcBiter(int length,int id = DEFAULT_CLASS_ID);
 	YcBiter(int length,bool * inData, int id = DEFAULT_CLASS_ID);//用以克隆
 	
-	bool Widen_EmptySide(int n, bool mode);//成功时返回tre
-	//mode == true时拓宽左边(值不变),mode == false时拓宽右边(低位向高位移动)
-	bool Flush_bData(int n);//成功时返回true
+	bool Widen_EmptySide(int n, bool true2left_OR_false2right);////mode == true时拓宽左边(值不变),mode == false时拓宽右边(低位向高位移动)
+	//成功时返回tre
+	bool Flush_bData(int n);
+	//成功时返回true
 	
 	void CoverWrite(bool data[], int inLength);
 	void CoverWrite_RoughString(string str)
@@ -67,9 +68,55 @@ public:
 	}
 	//将不会修改_current为小于0的值
 
-	void Debug_OutMsgShow(void)
+	void Debug_OutMsgShow_Bit(void)
 	{
 		outMsg(0, GetRoughDataString().c_str()); 
+	}
+	void Debug_OutMsgShow_Hex(bool format = true)
+	{
+		int tlen,l_distance;
+		for (tlen = _length; tlen % 8 != 0; tlen++) {} //补充到能被8位2进制数整除
+		l_distance = _length - tlen;
+
+		string str;
+		int rev = 0;
+		for (int i = 0; i <= tlen; i++)
+		{
+			if (i < l_distance)
+			{
+				continue;
+			}
+			else
+			{
+				if (i % 4 == 0 && i != 0)
+				{
+					if (rev < 10)
+					{
+						str += (char)('0' + rev);
+					}
+					else 
+					{
+						str += (char)('A' + rev - 10);
+					}
+					if (i == tlen)	int b = 0;
+					if (format && i%8 == 0)
+						str += ' ';
+					rev = 0;
+				}
+				if (i == tlen)
+				{
+					break;
+					//i需要等于tlen用于结算,而为了防止爆数组这里需要做break
+				}
+				if(_bData[i])
+					rev += pow(2, 3 - (i % 4));
+				else
+				{
+					//do nothing
+				}
+			}
+		}
+		outMsg(0, str.c_str());
 	}
 	int Debug_GetLen()
 	{

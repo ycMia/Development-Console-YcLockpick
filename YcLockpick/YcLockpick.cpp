@@ -6,9 +6,18 @@
 
 int main()
 {
-	bool * b = new bool[30];
-	printf("0x%x\n", b);
-	YcBiter yb(30,b);
+	bool * b = new bool[32]
+	{	false,false,false, true, 
+		false, false, true, true,
+		true, true, true, true,
+		true, true, true, true, 
+		true, true, true, true, 
+		true, true, true, true, 
+		true, true, true, true, 
+		true, true, true, true, };
+	YcBiter yb(32,b,1);
+	yb.Debug_OutMsgShow_Hex(false);
+	yb.Debug_OutMsgShow_Bit();
 	return 0;
 }
 

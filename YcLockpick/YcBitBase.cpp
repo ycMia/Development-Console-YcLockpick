@@ -33,18 +33,18 @@ inline YcBiter::YcBiter(int length,bool * inData , int id) : _length(length), _c
 	}
 #ifdef DEBUG
 	outMsg(0, "Biter %d created (Way: Clone), length: %d, _bData's Address: 0x%x", _classID, _length, _bData);
-	Debug_OutMsgShow();
+	Debug_OutMsgShow_Bit();
 #endif // DEBUG
 }
 
-inline bool YcBiter::Widen_EmptySide(int n,bool mode)
+inline bool YcBiter::Widen_EmptySide(int n,bool true2left_OR_false2right)
 {
 	if (n <= 0)	return false;
 
 	bool* ptemp = new bool[_length + n];
 	for (int i = 0; i < n; i++)
 		ptemp[i] = false;
-	if(mode == true)
+	if(true2left_OR_false2right == true)
 		for (int i = 0; i < _length; i++)
 			ptemp[i+n] = _bData[i];
 	else
