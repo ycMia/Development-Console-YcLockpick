@@ -4,20 +4,13 @@
 
 #include "YcBitBase.cpp"
 
+using namespace std;
+
 int main()
 {
-	bool * b = new bool[32]
-	{	false,false,false, true, 
-		false, false, true, true,
-		true, true, true, true,
-		true, true, true, true, 
-		true, true, true, true, 
-		true, true, true, true, 
-		true, true, true, true, 
-		true, true, true, true, };
-	YcBiter yb(32,b,1);
-	yb.Debug_OutMsgShow_Hex(false);
-	yb.Debug_OutMsgShow_Bit();
+	YcBiter yb;
+	yb.CoverWrite_RoughString("1	0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111");
+	cout<<yb.Debug_Get_bData_Hex(true);
 	return 0;
 }
 
