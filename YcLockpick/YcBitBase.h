@@ -44,16 +44,16 @@ class YcBiter
 public:
 	~YcBiter();
 	YcBiter(int id = _Const_DefaultClassID_YcBiter) : _classID(id) {}
-	YcBiter(int length,int id = _Const_DefaultClassID_YcBiter);
-	YcBiter(int length,bool * inData, int id = _Const_DefaultClassID_YcBiter);//用以克隆
-	
+	YcBiter(int length, int id = _Const_DefaultClassID_YcBiter);
+	YcBiter(int length, bool * inData, int id = _Const_DefaultClassID_YcBiter);//用以克隆
+
 	bool Widen_EmptySide(int n, bool true2left_OR_false2right);//mode == true时拓宽左边(值不变),mode == false时拓宽右边(低位向高位移动),成功时返回tre
 	bool Flush_bData(int n);	//成功时返回true
 	void CoverWrite(bool data[], int inLength);
 	void CoverWrite_RoughString(string str);
-//	void Debug_OutMsgShow_Bit(void) 于2020年7月8日弃用
+	//	void Debug_OutMsgShow_Bit(void) 于2020年7月8日弃用
 	string Debug_Get_bData_Hex(bool format = true);
-	int Debug_GetLen(){	return _length; }
+	int Debug_GetLen() { return _length; }
 	int Length() { return _length; }
 	static const int _Const_DefaultClassID_YcBiter = -1;
 private:

@@ -8,14 +8,14 @@ inline YcBiter::~YcBiter()
 	delete[] _bData; _bData = NULL;//为了不内存泄露还是写一下吧
 }
 
-inline YcBiter::YcBiter(int length,int id) :  _length(length), _classID(id)
+inline YcBiter::YcBiter(int length, int id) : _length(length), _classID(id)
 {
-		delete[] _bData;
-		_bData = new bool[_length];
-		memset(_bData, 0, _length * sizeof(bool));
+	delete[] _bData;
+	_bData = new bool[_length];
+	memset(_bData, 0, _length * sizeof(bool));
 }
 
-inline YcBiter::YcBiter(int length,bool * inData , int id) : _length(length), _classID(id)
+inline YcBiter::YcBiter(int length, bool * inData, int id) : _length(length), _classID(id)
 {
 	//Way of Clone
 	delete[] _bData; _bData = NULL;
@@ -27,23 +27,23 @@ inline YcBiter::YcBiter(int length,bool * inData , int id) : _length(length), _c
 	}
 }
 
-inline bool YcBiter::Widen_EmptySide(int n,bool true2left_OR_false2right)
+inline bool YcBiter::Widen_EmptySide(int n, bool true2left_OR_false2right)
 {
 	if (n <= 0)	return false;
 
 	bool* ptemp = new bool[_length + n];
 	for (int i = 0; i < n; i++)
 		ptemp[i] = false;
-	if(true2left_OR_false2right == true)
+	if (true2left_OR_false2right == true)
 		for (int i = 0; i < _length; i++)
-			ptemp[i+n] = _bData[i];
+			ptemp[i + n] = _bData[i];
 	else
 		for (int i = 0; i < _length; i++)
 			ptemp[i] = _bData[i];
-	delete [] _bData;
+	delete[] _bData;
 	_bData = ptemp;
 	ptemp = NULL;
-	_length+=n;
+	_length += n;
 
 	return true;
 }
@@ -59,7 +59,7 @@ inline bool YcBiter::Flush_bData(int n)
 		_length = n;//给予_lenghth新值
 		delete[] _bData;
 		_bData = new bool[n];
-		for (int i = 0; i <	_length; i++)
+		for (int i = 0; i < _length; i++)
 			_bData[i] = false;
 		return true;
 	}

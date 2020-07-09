@@ -10,7 +10,7 @@ int main()
 {
 	YcBiter yb;
 	yb.CoverWrite_RoughString("1	0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111");
-	cout << yb.Debug_Get_bData_Hex(true)<<endl;
+	cout << yb.Debug_Get_bData_Hex(true) << endl;
 	yb.Widen_EmptySide(32, false);
 	cout << yb.Debug_Get_bData_Hex(true) << endl;
 	return 0;
