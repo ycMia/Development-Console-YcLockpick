@@ -1,3 +1,12 @@
+# TemparyFileFolder
+/YcLockpick/Debug/
+
+# VisualStudio
+/YcLockpick/.vs/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
 # Prerequisites
 *.d
 
