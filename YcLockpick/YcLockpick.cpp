@@ -8,27 +8,34 @@ using namespace std;
 
 int main()
 {
-	cout << endl;
-	YcBiter yb;
-	yb.CoverWrite_RoughString("1	0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111");
-	cout << yb.Debug_Get_bData_Hex(true) << endl;
-	cout << yb.Length() << endl;
-	unsigned char arrayTest[300];
-	for (int i = 0; i < yb.Length() / 8 + 1; i++)
-	{
-		arrayTest[i] = 0;
-	}
+	YcBiterComputable yba();
+	YcBiterComputable yba2();
 
-	yb.dumpTo8BitArray(yb.Length()/8+1,arrayTest);
-	for (int i = 0; i < yb.Length() / 8 + 1; i++)
-	{
-		cout << (int)arrayTest[i] << " ";
-	}
-//	yb.Widen_EmptySide(32, false);
+	yba.CoverWrite_RoughString("1100");
+	yba2.CoverWrite_RoughString("1010");
+
+	yba2.XOR_sameWidth(yba2, yba);
+
+	cout << yba2.Debug_GetRoughDataString() << endl;
+
+//	cout << endl;
+//	YcBiter yb;
+//	yb.CoverWrite_RoughString("1	0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111");
 //	cout << yb.Debug_Get_bData_Hex(true) << endl;
-	cout << endl << "18             52              103           137..." << endl;
-
-	return 0;
+//	cout << yb.Length() << endl;
+//	unsigned char arrayTest[300];
+//	for (int i = 0; i < yb.Length() / 8 + 1; i++)
+//	{
+//		arrayTest[i] = 0;
+//	}
+//
+//	yb.dumpTo8BitArray(yb.Length()/8+1,arrayTest);
+//	for (int i = 0; i < yb.Length() / 8 + 1; i++)
+//	{
+//		cout << (int)arrayTest[i] << " ";
+//	}
+//	
+//	return 0;
 }
 
 #ifdef SAMPLE

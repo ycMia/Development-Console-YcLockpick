@@ -86,7 +86,6 @@ inline void YcBiter::CoverWrite_RoughString(string str)
 			continue;
 		str2 += str[i];
 	}
-
 	CoverWrite(strToBool_RS(str2), str2.length());
 }
 
@@ -140,7 +139,6 @@ inline string YcBiter::Debug_Get_bData_Hex(bool format)
 inline bool YcBiter::dumpTo8BitArray(int nBytes, unsigned char address[])
 {
 	if (nBytes * 8 < _length)	return  false;
-	
 	int tlen;
 	int current = 0;
 	for (tlen = _length; tlen % 8 != 0; tlen++) {} //补充到8位
@@ -159,24 +157,6 @@ inline bool YcBiter::dumpTo8BitArray(int nBytes, unsigned char address[])
 	return true;
 }
 
-//
-//inline bool YcBiter::dumpTo8BitArray(int nBytes,unsigned char address[])
-//{
-//	int tlength = _length;
-//	for (; tlength % 8 == 0; tlength++) {}
-//	
-//	if ((nBytes*8) < _length)	return false;
-//	else
-//	{
-//		for (int i = _length-1; i >=0; i--,tlength)
-//		{
-//			if (_bData[i])
-//				address[i / 8] += pow(2,8-(tlength % 8));
-//		}
-//	}
-//	return true;
-//}
-
 inline string YcBiter::Debug_GetRoughDataString()
 {
 	string dstr;
@@ -188,4 +168,23 @@ inline string YcBiter::Debug_GetRoughDataString()
 			dstr += "0";
 	}
 	return dstr;
+}
+
+inline bool YcBiterComputable::XOR_sameWidth(YcBiter a, YcBiter b)//注意!此处指针传出后不delete,请自行控制合何时delete!
+{
+	if (a.Length() == b.Length() &&
+		_length==a.Length() &&
+		_length==b.Length() )
+	{
+		bool * pb = new bool[a.Length()];
+		for (int i = 0; i < a.Length(); i++)
+		{
+			_bData[i] = a._bData[i] ^ b._bData[i];
+		}
+	}
+	else
+	{
+		return false;
+	}
+	return true;
 }

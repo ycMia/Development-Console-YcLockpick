@@ -8,13 +8,19 @@ using namespace std;
 class YcBiter
 {
 public:
+	//----ConstValueDefinitionArea----
+	static const int _Const_DefaultClassID_YcBiter = -1;
+
+	//----Construction----
 	~YcBiter();
-	YcBiter() : _classID(-1/*_Const_DefaultClassID_YcBiter*/) {}
+	YcBiter() : _classID(_Const_DefaultClassID_YcBiter) 
+	{
+		_length = 1;
+		*_bData = new bool[1];
+	}
 	YcBiter(int length, int id = _Const_DefaultClassID_YcBiter);
 	YcBiter(int length, bool * inData, int id = _Const_DefaultClassID_YcBiter);//用以克隆
 
-	//----ConstValueDefinitionArea----
-	static const int _Const_DefaultClassID_YcBiter = -1;
 
 	//----UsefulArea
 	bool Widen_EmptySide(int n, bool true2left_OR_false2right);//mode == true时拓宽左边(值不变),mode == false时拓宽右边(低位向高位移动),成功时返回tre
@@ -31,6 +37,8 @@ public:
 	string Debug_Get_bData_Hex(bool format = true);
 	
 private:
+	friend class YcBiterComputable;
+
 	const int _classID;
 	int _length;
 	bool * _bData = NULL;
@@ -49,12 +57,13 @@ private:
 	}//辅助函数,将形如"1000100100"这类的string转为bool的数组 \n CWS指CoverWrite_S,此函数在非特殊情况下应该只与YcBiter_CoverWrite_RoughString或其他类似函数配合使用,所以我把它放在private中
 };
 
-class YcComputableBiter : YcBiter
+class YcBiterComputable : public YcBiter
 {
 public:
-	YcComputableBiter(int length, int id = _Const_DefaultClassID_YcBiter) : YcBiter(length,id)
-	{
+	//----Construction----
+	YcBiterComputable(): YcBiter(){}
+	YcBiterComputable(int length, int id = _Const_DefaultClassID_YcBiter) : YcBiter(length,id){}
 
-	}
+	bool XOR_sameWidth(YcBiter a,YcBiter b);
 private:
 };
