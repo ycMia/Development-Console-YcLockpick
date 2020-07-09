@@ -5,7 +5,7 @@
 
 inline YcBiter::~YcBiter()
 {
-	delete[] _bData; _bData = NULL;//为了不内存泄露还是写一下吧
+	delete[] _bData; _bData = NULL;
 }
 
 inline YcBiter::YcBiter(int length, int id) : _length(length), _classID(id)
@@ -20,7 +20,7 @@ inline YcBiter::YcBiter(int length, bool * inData, int id) : _length(length), _c
 	//Way of Clone
 	delete[] _bData; _bData = NULL;
 	_bData = new bool[_length];
-	memset(_bData, 0, _length * sizeof(bool));//使用之前还是清理一下吧
+	memset(_bData, 0, _length * sizeof(bool));
 	for (int i = 0; i < _length; i++)
 	{
 		_bData[i] = inData[i];
@@ -135,4 +135,17 @@ inline string YcBiter::Debug_Get_bData_Hex(bool format)
 		}
 	}
 	return str;
+}
+
+inline string YcBiter::Debug_GetRoughDataString()
+{
+	string dstr;
+	for (int i = 0; i < _length; i++)
+	{
+		if (_bData[i])
+			dstr += "1";
+		else
+			dstr += "0";
+	}
+	return dstr;
 }
