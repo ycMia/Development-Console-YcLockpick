@@ -137,6 +137,23 @@ inline string YcBiter::Debug_Get_bData_Hex(bool format)
 	return str;
 }
 
+inline bool YcBiter::dumpTo8BitArray(int nBytes,unsigned char address[])
+{
+	int tlength = _length;
+	for (; tlength % 8 == 0; tlength++) {}
+	
+	if ((nBytes*8) < _length)	return false;
+	else
+	{
+		for (int i = _length-1; i >=0; i--,tlength)
+		{
+			if (_bData[i])
+				address[i / 8] += pow(2,8-(tlength % 8));
+		}
+	}
+	return true;
+}
+
 inline string YcBiter::Debug_GetRoughDataString()
 {
 	string dstr;
