@@ -116,7 +116,7 @@ inline string YcBiter::Debug_Get_bData_Hex(bool format)
 			{
 				str += (char)('A' + rev - 10);
 			}
-			if (i == tlen)	int b = 0;
+			if (i == tlen) {}
 			if (format && i % 8 == 0)
 				str += ' ';
 			rev = 0;
@@ -137,22 +137,45 @@ inline string YcBiter::Debug_Get_bData_Hex(bool format)
 	return str;
 }
 
-inline bool YcBiter::dumpTo8BitArray(int nBytes,unsigned char address[])
+inline bool YcBiter::dumpTo8BitArray(int nBytes, unsigned char address[])
 {
-	int tlength = _length;
-	for (; tlength % 8 == 0; tlength++) {}
+	if (nBytes * 8 < _length)	return  false;
 	
-	if ((nBytes*8) < _length)	return false;
-	else
+	int tlen;
+	int current = 0;
+	for (tlen = _length; tlen % 8 != 0; tlen++) {} //补充到8位
+	int l_distance = tlen - _length;
+
+	for (int i = 0; i <= tlen; i++)//见 if (i == tlen) 的限制
 	{
-		for (int i = _length-1; i >=0; i--,tlength)
-		{
-			if (_bData[i])
-				address[i / 8] += pow(2,8-(tlength % 8));
-		}
+		if (i < l_distance)		continue;
+		if (i % 8 == 0 && i != 0)	current++;
+		if (i == tlen)	break;
+		//i需要等于tlen(也就是长度为tlen+1)用于结算最后一位
+		//而为了防止爆数组这里需要做break
+		if (_bData[i - l_distance])
+			address[current] += (int)pow(2, 7 - (i % 8));
 	}
 	return true;
 }
+
+//
+//inline bool YcBiter::dumpTo8BitArray(int nBytes,unsigned char address[])
+//{
+//	int tlength = _length;
+//	for (; tlength % 8 == 0; tlength++) {}
+//	
+//	if ((nBytes*8) < _length)	return false;
+//	else
+//	{
+//		for (int i = _length-1; i >=0; i--,tlength)
+//		{
+//			if (_bData[i])
+//				address[i / 8] += pow(2,8-(tlength % 8));
+//		}
+//	}
+//	return true;
+//}
 
 inline string YcBiter::Debug_GetRoughDataString()
 {
