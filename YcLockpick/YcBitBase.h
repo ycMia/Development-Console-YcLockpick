@@ -47,82 +47,14 @@ public:
 	YcBiter(int length,int id = _Const_DefaultClassID_YcBiter);
 	YcBiter(int length,bool * inData, int id = _Const_DefaultClassID_YcBiter);//用以克隆
 	
-	bool Widen_EmptySide(int n, bool true2left_OR_false2right);////mode == true时拓宽左边(值不变),mode == false时拓宽右边(低位向高位移动)
-	//成功时返回tre
-	bool Flush_bData(int n);
-	//成功时返回true
-	
+	bool Widen_EmptySide(int n, bool true2left_OR_false2right);//mode == true时拓宽左边(值不变),mode == false时拓宽右边(低位向高位移动),成功时返回tre
+	bool Flush_bData(int n);	//成功时返回true
 	void CoverWrite(bool data[], int inLength);
-	void CoverWrite_RoughString(string str)
-	{
-		string str2 = "";
-		for (int i = 0; i < (int)str.length(); i++)
-		{
-			if (str[i] == ' '||str[i]=='	')
-				continue;
-			str2 += str[i];
-		}
-
-		CoverWrite(strToBool_RS(str2), str2.length());
-	}
-
-	//void Debug_OutMsgShow_Bit(void)
-	//{
-	//	outMsg(0, GetRoughDataString().c_str()); 
-	//}
-	//于2020年7月8日弃用
-
-	string Debug_Get_bData_Hex(bool format = true)
-	{
-		string str;
-		if (!format)
-			str += "0x";
-		int tlen;
-		for (tlen = _length; tlen % 8 != 0; tlen++) {} //补充到8位
-		int l_distance = tlen - _length;
-
-		int rev = 0;
-		for (int i = 0; i <= tlen; i++)//见 if (i == tlen) 的限制
-		{
-			if (i < l_distance)
-			{
-				continue;
-			}
-			if (i % 4 == 0 && i != 0)
-			{
-				if (rev < 10)
-				{
-					str += (char)('0' + rev);
-				}
-				else 
-				{
-					str += (char)('A' + rev - 10);
-				}
-				if (i == tlen)	int b = 0;
-				if (format && i%8 == 0)
-					str += ' ';
-				rev = 0;
-			}
-
-			if (i == tlen)
-			{
-				break;
-				//i需要等于tlen(也就是长度为tlen+1)用于结算最后一位
-				//而为了防止爆数组这里需要做break
-			}
-
-			if (_bData[i-l_distance])
-			{
-				rev += (int)pow(2, 3 - (i% 4));
-			}
-		}
-		return str;
-	}
-	int Debug_GetLen()
-	{
-		return _length;
-	}
-
+	void CoverWrite_RoughString(string str);
+//	void Debug_OutMsgShow_Bit(void) 于2020年7月8日弃用
+	string Debug_Get_bData_Hex(bool format = true);
+	int Debug_GetLen(){	return _length; }
+	int Length() { return _length; }
 	static const int _Const_DefaultClassID_YcBiter = -1;
 private:
 	const int _classID;
