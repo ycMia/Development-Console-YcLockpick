@@ -170,7 +170,7 @@ inline string YcBiter::Debug_GetRoughDataString()
 	return dstr;
 }
 
-inline bool YcBiterComputable::XOR_sameWidth(YcBiter a, YcBiter b)//注意!此处指针传出后不delete,请自行控制合何时delete!
+inline bool YcBiterComputable::XOR_sameWidth(YcBiter & a,YcBiter & b)
 {
 	if (a.Length() == b.Length() &&
 		_length==a.Length() &&

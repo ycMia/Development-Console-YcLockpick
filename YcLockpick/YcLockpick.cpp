@@ -8,15 +8,15 @@ using namespace std;
 
 int main()
 {
-	YcBiterComputable yba();
-	YcBiterComputable yba2();
+	YcBiterComputable yba1,yba2;
+	yba1.CoverWrite_RoughString("1111 0000 1111 1111 1111 1111 1111");
+	yba2.CoverWrite_RoughString("1010 1010 1111 1111 1111 1111 1111");
 
-	yba.CoverWrite_RoughString("1100");
-	yba2.CoverWrite_RoughString("1010");
-
-	yba2.XOR_sameWidth(yba2, yba);
-
+	YcBiterComputable yba3(yba1.Length());
+	yba3.XOR_sameWidth(yba1, yba2);
+	cout << yba1.Debug_GetRoughDataString() << endl;
 	cout << yba2.Debug_GetRoughDataString() << endl;
+	cout << yba3.Debug_GetRoughDataString() << endl;
 
 //	cout << endl;
 //	YcBiter yb;
