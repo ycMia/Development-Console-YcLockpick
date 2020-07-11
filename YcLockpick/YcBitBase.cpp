@@ -5,7 +5,7 @@
 
 inline YcBiter::~YcBiter()
 {
-	delete[] _bData; _bData = NULL;
+	deleteBuffer_bData();
 }
 
 inline YcBiter::YcBiter(int length, int id) : _length(length), _classID(id)
@@ -18,7 +18,7 @@ inline YcBiter::YcBiter(int length, int id) : _length(length), _classID(id)
 inline YcBiter::YcBiter(int length, bool * inData, int id) : _length(length), _classID(id)
 {
 	//Way of Clone
-	delete[] _bData; _bData = NULL;
+	deleteBuffer_bData();
 	_bData = new bool[_length];
 	memset(_bData, 0, _length * sizeof(bool));
 	for (int i = 0; i < _length; i++)
@@ -40,7 +40,7 @@ inline bool YcBiter::Widen_EmptySide(int n, bool true2left_OR_false2right)
 	else
 		for (int i = 0; i < _length; i++)
 			ptemp[i] = _bData[i];
-	delete[] _bData;
+	deleteBuffer_bData();
 	_bData = ptemp;
 	ptemp = NULL;
 	_length += n;
@@ -65,7 +65,7 @@ inline bool YcBiter::Flush_bData(int n)
 	}
 }
 
-inline void YcBiter::CoverWrite(bool data[], int inLength)
+inline void YcBiter::CoverWrite(bool * data, int inLength)
 {
 	int difference = 0;
 	if (inLength <= _length)
@@ -79,6 +79,7 @@ inline void YcBiter::CoverWrite(bool data[], int inLength)
 
 inline void YcBiter::CoverWrite_RoughString(string str)
 {
+	deleteBuffer_bData();
 	string str2 = "";
 	for (int i = 0; i < (int)str.length(); i++)
 	{

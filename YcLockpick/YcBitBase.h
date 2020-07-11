@@ -25,7 +25,7 @@ public:
 	//----UseageArea
 	bool Widen_EmptySide(int n, bool true2left_OR_false2right);//mode == true时拓宽左边(值不变),mode == false时拓宽右边(低位向高位移动),成功时返回tre
 	bool Flush_bData(int n);	//成功时返回true
-	void CoverWrite(bool data[], int inLength);
+	void CoverWrite(bool * data, int inLength);
 	void CoverWrite_RoughString(string str);
 //	void Debug_OutMsgShow_Bit(void) 于2020年7月8日弃用
 	int Length() { return _length; }
@@ -39,8 +39,16 @@ public:
 
 private:
 	const int _classID;
-	int _length;
+	int _length = 0;
 	bool * _bData = NULL;
+	
+	bool * deleteBuffer_bData(void)
+	{
+		delete[] _bData;	 _bData = NULL;
+		_length = 0;
+		return _bData;
+	}
+	//返回新的_bData所指向的地址(正常应该是NULL)
 
 	bool * strToBool_RS(string str2)
 	{
