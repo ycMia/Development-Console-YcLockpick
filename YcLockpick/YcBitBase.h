@@ -31,16 +31,13 @@ public:
 	int Length() { return _length; }
 	
 	//----DEBUG&ShowArea
-	bool dumpTo8BitArray(int nBytes,unsigned char address[]);//成功时返回true, address的delete需要手动操作
+	bool dump8BitArray(int nBytes,unsigned char address[]);//成功时返回true, address的delete需要手动操作
+	bool * GetBoolArray(int nbitslength);
 	int Debug_GetLen() { return _length; }
 	string Debug_GetRoughDataString();//返回形如"10001010"的字符串,而不是raw
 	string Debug_Get_bData_Hex(bool format = true);
 	
-
 private:
-	const int _classID;
-	int _length = 0;
-	bool * _bData = NULL;
 	
 	bool * deleteBuffer_bData(void)
 	{
@@ -62,8 +59,13 @@ private:
 		}
 		return pOut;
 	}//辅助函数,将形如"1000100100"这类的string转为bool的数组 \n CWS指CoverWrite_S,此函数在非特殊情况下应该只与YcBiter_CoverWrite_RoughString或其他类似函数配合使用,所以我把它放在private中
+protected:
+	bool * _bData = NULL;
+	int _length = 0;
+	const int _classID;
+
 private:
-	friend class YcBiterComputable;
+	//friend class YcBiterComputable;
 };
 
 class YcBiterComputable : public YcBiter
@@ -76,7 +78,8 @@ public:
 	}
 	YcBiterComputable(int length, int id = _Const_DefaultClassID_YcBiter) : YcBiter(length,id){}
 
-	bool XOR_sameWidth(YcBiter & a, YcBiter & b);
+	//bool XOR_sameWidth(YcBiter & a, YcBiter & b);
+	bool XOR_sameWidth(bool * a, bool * b);
 private:
 	
 };

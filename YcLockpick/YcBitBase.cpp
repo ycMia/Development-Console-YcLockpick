@@ -137,7 +137,7 @@ inline string YcBiter::Debug_Get_bData_Hex(bool format)
 	return str;
 }
 
-inline bool YcBiter::dumpTo8BitArray(int nBytes, unsigned char address[])
+inline bool YcBiter::dump8BitArray(int nBytes, unsigned char address[])
 {
 	if (nBytes * 8 < _length)	return  false;
 	int tlen;
@@ -158,6 +158,23 @@ inline bool YcBiter::dumpTo8BitArray(int nBytes, unsigned char address[])
 	return true;
 }
 
+inline bool * YcBiter::GetBoolArray(int nbitslength)
+{
+	if (nbitslength < _length)	return nullptr;
+	else
+	{
+		bool * address = new bool[nbitslength];
+		//issue 2020-07-12
+		nbitslength--;
+		while (nbitslength > 0)
+		{
+			address[nbitslength] = _bData[nbitslength];
+			nbitslength--;
+		}
+		return address;
+	}
+}
+
 inline string YcBiter::Debug_GetRoughDataString()
 {
 	string dstr;
@@ -171,21 +188,31 @@ inline string YcBiter::Debug_GetRoughDataString()
 	return dstr;
 }
 
-inline bool YcBiterComputable::XOR_sameWidth(YcBiter & a,YcBiter & b)
+//inline bool YcBiterComputable::XOR_sameWidth(YcBiter & a,YcBiter & b)
+//{
+//	if (a.Length() == b.Length() &&
+//		_length==a.Length() &&
+//		_length==b.Length() )
+//	{
+//		bool * pb = new bool[a.Length()];
+//		for (int i = 0; i < a.Length(); i++)
+//		{
+//			_bData[i] = a._bData[i] ^ b._bData[i];
+//		}
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//	return true;
+//}
+
+inline bool YcBiterComputable::XOR_sameWidth(bool * a, bool * b)
 {
-	if (a.Length() == b.Length() &&
-		_length==a.Length() &&
-		_length==b.Length() )
+	if (_bData == nullptr)	return false;
+	for (int i = 0; i < _length; i++)
 	{
-		bool * pb = new bool[a.Length()];
-		for (int i = 0; i < a.Length(); i++)
-		{
-			_bData[i] = a._bData[i] ^ b._bData[i];
-		}
-	}
-	else
-	{
-		return false;
+		_bData[i] = a[i] ^ b[i];
 	}
 	return true;
 }
