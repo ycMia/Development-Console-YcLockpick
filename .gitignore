@@ -3,6 +3,7 @@
 
 # VisualStudio
 /YcLockpick/.vs/
+.vs/
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
