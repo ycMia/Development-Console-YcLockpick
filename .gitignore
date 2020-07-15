@@ -1,6 +1,12 @@
 # TemparyFileFolder
 /YcLockpick/Debug/
 
+# VC++ Minimum Rebuild Dependency File
+*.idb
+
+# Program Debug Database
+*.pdb
+
 # VisualStudio
 /YcLockpick/.vs/
 .vs/

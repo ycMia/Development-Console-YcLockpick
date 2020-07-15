@@ -17,7 +17,7 @@ int main()
 	b.CoverWrite_RoughString("1010");
 	//c.XOR_sameWidth(a, b);
 	cout << c.Debug_GetRoughDataString() << endl;
-	c.XOR_sameWidth2(a.GetBoolArray(a.Length()), b.GetBoolArray(b.Length()));
+	c.XOR_sameWidth(a.GetBoolArray(a.Length()), b.GetBoolArray(b.Length()));
 	cout << c.Debug_GetRoughDataString() << endl;
 }
 
