@@ -8,11 +8,18 @@ using namespace std;
 class YcBiter
 {
 public:
+
+	~YcBiter()
+	{
+		cout << "Exiting!!" << endl;
+		deleteBuffer_bData();
+	}
+
 	//----ConstValueDefinitionArea----
 	static const int _Const_DefaultClassID_YcBiter = -1;
 
 	//----Construction----
-	~YcBiter();
+	
 	YcBiter(void) : _classID(_Const_DefaultClassID_YcBiter) 
 	{
 		_length = 1;
@@ -60,6 +67,7 @@ private:
 		return pOut;
 	}//辅助函数,将形如"1000100100"这类的string转为bool的数组 \n CWS指CoverWrite_S,此函数在非特殊情况下应该只与YcBiter_CoverWrite_RoughString或其他类似函数配合使用,所以我把它放在private中
 protected:
+
 	bool * _bData = NULL;
 	int _length = 0;
 	const int _classID;
@@ -71,6 +79,10 @@ private:
 class YcBiterComputable : public YcBiter
 {
 public:
+	~YcBiterComputable()
+	{
+		
+	}
 	//----Construction----
 	YcBiterComputable(void): YcBiter()
 	{

@@ -3,14 +3,8 @@
 #include "pch.h"
 #include "YcBitBase.h"
 
-inline YcBiter::~YcBiter()
-{
-	deleteBuffer_bData();
-}
-
 inline YcBiter::YcBiter(int length, int id) : _length(length), _classID(id)
 {
-	delete[] _bData;
 	_bData = new bool[_length];
 	memset(_bData, 0, _length * sizeof(bool));
 }
@@ -18,7 +12,6 @@ inline YcBiter::YcBiter(int length, int id) : _length(length), _classID(id)
 inline YcBiter::YcBiter(int length, bool * inData, int id) : _length(length), _classID(id)
 {
 	//Way of Clone
-	deleteBuffer_bData();
 	_bData = new bool[_length];
 	memset(_bData, 0, _length * sizeof(bool));
 	for (int i = 0; i < _length; i++)
@@ -210,9 +203,11 @@ inline string YcBiter::Debug_GetRoughDataString()
 inline bool YcBiterComputable::XOR_sameWidth(bool * a, bool * b)
 {
 	if (_bData == nullptr)	return false;
-	for (int i = 0; i < _length; i++)
+	for (int i = 0; i < _length; i++)//默认_length与a和b指向的相应bool型数组的长度相等
 	{
 		_bData[i] = a[i] ^ b[i];
 	}
+	delete[] a;
+	delete[] b;
 	return true;
 }
