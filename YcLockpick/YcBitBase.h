@@ -11,7 +11,7 @@ public:
 
 	~YcBiter()
 	{
-		cout << "Exiting!!" << endl;
+		//cout << "Exiting!!" << endl;
 		deleteBuffer_bData();
 	}
 
@@ -48,7 +48,14 @@ private:
 	
 	bool * deleteBuffer_bData(void)
 	{
-		delete[] _bData;	 _bData = NULL;
+		if (_bData != nullptr)
+		{
+			delete[] _bData;	 _bData = NULL;
+		}//多次执行delete(或delete[])将会导致问题出现
+		else
+		{
+			_bData = NULL;
+		}
 		_length = 0;
 		return _bData;
 	}
