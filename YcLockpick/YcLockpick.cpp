@@ -10,14 +10,8 @@ using namespace std;
 //--程序入口点main()--
 int main()
 {
-	YcBiter a;
-	YcBiter b;
-	YcBiterComputable c(4);
-	a.CoverWrite_RoughString("1100");
-	b.CoverWrite_RoughString("1010");
-	//c.XOR_sameWidth(a, b);
-	cout << c.Debug_GetRoughDataString() << endl;
-	c.XOR_sameWidth(a.GetBoolArray(a.Length()), b.GetBoolArray(b.Length()));
-	cout << c.Debug_GetRoughDataString() << endl;
+	YcBiter a("10101110101000111");
+	cout << a.Debug_Get_bData_Hex() << endl;
+	cout << a.Debug_GetRoughDataString() << endl;
 }
 

@@ -3,22 +3,17 @@
 #include "pch.h"
 #include "YcBitBase.h"
 
-inline YcBiter::~YcBiter()
+inline YcBiter::YcBiter(int length)
 {
-	deleteBuffer_bData();
-}
-
-inline YcBiter::YcBiter(int length, int id) : _length(length), _classID(id)
-{
-	delete[] _bData;
+	_length = length;
 	_bData = new bool[_length];
 	memset(_bData, 0, _length * sizeof(bool));
 }
 
-inline YcBiter::YcBiter(int length, bool * inData, int id) : _length(length), _classID(id)
+inline YcBiter::YcBiter(int length, bool * inData) 
 {
+	_length = length;
 	//Way of Clone
-	deleteBuffer_bData();
 	_bData = new bool[_length];
 	memset(_bData, 0, _length * sizeof(bool));
 	for (int i = 0; i < _length; i++)
@@ -188,31 +183,56 @@ inline string YcBiter::Debug_GetRoughDataString()
 	return dstr;
 }
 
-//inline bool YcBiterComputable::XOR_sameWidth(YcBiter & a,YcBiter & b)
-//{
-//	if (a.Length() == b.Length() &&
-//		_length==a.Length() &&
-//		_length==b.Length() )
-//	{
-//		bool * pb = new bool[a.Length()];
-//		for (int i = 0; i < a.Length(); i++)
-//		{
-//			_bData[i] = a._bData[i] ^ b._bData[i];
-//		}
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//	return true;
-//}
-
 inline bool YcBiterComputable::XOR_sameWidth(bool * a, bool * b)
 {
 	if (_bData == nullptr)	return false;
-	for (int i = 0; i < _length; i++)
+	for (int i = 0; i < _length; i++)//默认_length与a和b指向的相应bool型数组的长度相等
 	{
 		_bData[i] = a[i] ^ b[i];
 	}
+	delete[] a;
+	delete[] b;
 	return true;
 }
+
+inline YcBiterComputable YcBiterComputable::operator xor(YcBiter & target)
+{
+	if (_length < target.Length())
+	{
+		Widen_EmptySide(target.Length() - _length, true);
+	}
+	YcBiterComputable ybc;
+	if (ybc.XOR_sameWidth(_bData, target.GetBoolArray(target.Length())))
+		return ybc;
+	else
+		return YcBiterComputable();
+}
+
+inline bool * YcBiter :: deleteBuffer_bData(void)
+{
+	if (_bData != nullptr)
+	{
+		delete[] _bData;
+		_bData = NULL;
+	}//多次执行delete(或delete[])将会导致问题出现
+	else
+	{
+		_bData = NULL;
+	}
+	_length = 0;
+	return _bData;
+}
+//返回新的_bData所指向的地址(正常应该是NULL)
+
+inline bool * YcBiter :: strToBool_RS(string str2)
+{
+	bool * pOut = new bool[str2.length()];
+	for (int i = 0; i < (int)str2.length(); i++)
+	{
+		if (str2[i] == '0')
+			pOut[i] = false;
+		else
+			pOut[i] = true;
+	}
+	return pOut;
+}//辅助函数,将形如"1000100100"这类的string转为bool的数组 \n CWS指CoverWrite_S,此函数在非特殊情况下应该只与YcBiter_CoverWrite_RoughString或其他类似函数配合使用,所以我把它放在private中
