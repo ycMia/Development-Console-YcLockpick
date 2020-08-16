@@ -35,10 +35,13 @@ inline bool YcBiter::Widen_EmptySide(int n, bool true2left_OR_false2right)
 	else
 		for (int i = 0; i < _length; i++)
 			ptemp[i] = _bData[i];
+	n += _length;
 	deleteBuffer_bData();
 	_bData = ptemp;
 	ptemp = NULL;
-	_length += n;
+	_length = n;
+	//_length += n;
+	//bug, 在调用deleteBuffer_bData()之后_length将会置0,导致此处_length将会等于n
 
 	return true;
 }
@@ -153,7 +156,7 @@ inline bool YcBiter::dump8BitArray(int nBytes, unsigned char address[])
 	return true;
 }
 
-inline bool * YcBiter::GetBoolArray(int nbitslength)
+inline bool * YcBiter::GetBoolArray(int nbitslength)//不删除new出来的数组
 {
 	if (nbitslength < _length)	return nullptr;
 	else
@@ -161,7 +164,7 @@ inline bool * YcBiter::GetBoolArray(int nbitslength)
 		bool * address = new bool[nbitslength];
 		//issue 2020-07-12
 		nbitslength--;
-		while (nbitslength > 0)
+		while (nbitslength >= 0)
 		{
 			address[nbitslength] = _bData[nbitslength];
 			nbitslength--;
@@ -176,36 +179,60 @@ inline string YcBiter::Debug_GetRoughDataString()
 	for (int i = 0; i < _length; i++)
 	{
 		if (_bData[i])
-			dstr += "1";
+			dstr.push_back('1');
 		else
-			dstr += "0";
+			dstr.push_back('0');
 	}
 	return dstr;
 }
 
-inline bool YcBiterComputable::XOR_sameWidth(bool * a, bool * b)
+inline YcBiterComputable YcBiterComputable::operator^(const YcBiterComputable & target)
 {
-	if (_bData == nullptr)	return false;
-	for (int i = 0; i < _length; i++)//默认_length与a和b指向的相应bool型数组的长度相等
+	bool * tboolArr = NULL;
+
+	int difference = _length - target._length;
+
+	if (difference<0)
 	{
-		_bData[i] = a[i] ^ b[i];
+		bool * tboolArr = new bool[_length - difference];
+
+		for (int i = 0; i < _length - difference; i++)
+		{
+			if (i >= -difference)
+				tboolArr[i] = _bData[i+difference] ^ target._bData[i];
+			else
+				tboolArr[i] = false;
+		}
+		YcBiterComputable * ybaRe = new YcBiterComputable(_length - difference, tboolArr);
+
+		tboolArr = NULL; 
+		return *ybaRe;
 	}
-	delete[] a;
-	delete[] b;
-	return true;
+	else
+	{
+		tboolArr = new bool[_length];
+
+		for (int i = 0; i < _length; i++)
+		{
+			if (i >= difference)
+				tboolArr[i] = _bData[i] ^ target._bData[i-difference];
+			else
+				tboolArr[i] = false;
+		}
+		YcBiterComputable * ybaRe = new YcBiterComputable(_length, tboolArr);
+
+		tboolArr = NULL; 
+		return *ybaRe;
+	}
 }
 
-inline YcBiterComputable YcBiterComputable::operator xor(YcBiter & target)
+inline void YcBiterComputable::operator=(const YcBiterComputable & target)
 {
-	if (_length < target.Length())
+	this->_length = target._length;
+	for (int i = 0; i < _length; i++)
 	{
-		Widen_EmptySide(target.Length() - _length, true);
+		this->_bData[i] = target._bData[i];
 	}
-	YcBiterComputable ybc;
-	if (ybc.XOR_sameWidth(_bData, target.GetBoolArray(target.Length())))
-		return ybc;
-	else
-		return YcBiterComputable();
 }
 
 inline bool * YcBiter :: deleteBuffer_bData(void)

@@ -56,14 +56,22 @@ public:
 	~YcBiterComputable() {}
 
 	//----Construction----
-	YcBiterComputable(YcBiter & yb) : YcBiter(yb.Length(), yb.GetBoolArray(yb.Length()) ) {}
+	YcBiterComputable(YcBiterComputable & yb) 
+		: YcBiter(yb.Length(), yb.GetBoolArray(yb.Length())) 
+	{}
+	YcBiterComputable(YcBiter & yb) 
+		: YcBiter(yb.Length(), yb.GetBoolArray(yb.Length()) ) 
+	{}
 
 	YcBiterComputable(void) : YcBiter() {}
 
 	YcBiterComputable(int length) : YcBiter(length){}
+	YcBiterComputable(int length,bool * inData) : YcBiter(length,inData) {}
 
-	bool XOR_sameWidth(bool * a, bool * b);
-	YcBiterComputable operator xor (YcBiter & target);
+	YcBiterComputable operator^ (const YcBiterComputable & target);
+	void operator= (const YcBiterComputable & target);
+	//运算符重载参考https://www.cnblogs.com/linuxAndMcu/p/10395383.html
+	//重载中const的细则见https://blog.csdn.net/weixin_43734095/article/details/104465307
 
 private:
 	
