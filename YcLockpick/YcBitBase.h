@@ -56,6 +56,8 @@ public:
 	~YcBiterComputable() {}
 
 	//----Construction----
+	YcBiterComputable(YcBiter & yb) : YcBiter(yb.Length(), yb.GetBoolArray(yb.Length()) ) {}
+
 	YcBiterComputable(void) : YcBiter() {}
 
 	YcBiterComputable(int length) : YcBiter(length){}
