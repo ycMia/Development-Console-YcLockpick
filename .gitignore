@@ -1,6 +1,9 @@
 # TemparyFileFolder
 /YcLockpick/Debug/
 
+# VS Code
+/.vscode
+
 # VC++ Minimum Rebuild Dependency File
 *.idb
 
