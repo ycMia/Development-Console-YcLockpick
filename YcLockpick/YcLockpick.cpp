@@ -1,4 +1,4 @@
-﻿//--YcLockpick.cpp--
+//--YcLockpick.cpp--
 #include "pch.h"
 
 #define DEBUG
@@ -9,10 +9,12 @@ using namespace std;
 
 int main()
 {
-	yctd::CQueue queueT;
-	yctd::CQueue queue2T;
-	queue2T.vSetArea(30);
-	cout << queueT.nGetLength() << endl;
-	cout << queue2T.nGetLength() << endl;
+	yctd::Queue queueT;
+	yctd::Queue queue2T;
+	queue2T.SetArea(30);
+	cout << queueT.GetLength() << endl;
+	cout << queue2T.GetLength() << endl;
+
+	cout << "end" <<endl;
 }
 

@@ -8,33 +8,33 @@ using namespace std;
 
 namespace yctd
 {
-	class CDataArea//连续的数据存放点
+	class DataArea//杩炵画鐨勬暟鎹瓨鏀剧偣
 	{
 	public:
-		CDataArea(void)
+		DataArea(void)
 		{
-			vSetArea(0);
+			SetArea(0);
 		}
 
-		void vSetArea(int nLength)
+		void SetArea(int nLength)
 		{
-			m_nLength = nLength;
-			m_pchData = new char[m_nLength];
+			_nLength = nLength;
+			_pchData = new char[_nLength];
 		}
 
-		int nGetLength(void)
+		int GetLength(void)
 		{
-			return m_nLength;
+			return _nLength;
 		}
 	protected:
-		int m_nLength;
-		char * m_pchData;
+		int _nLength;
+		char * _pchData;
 	};
 
-	class CQueue : public CDataArea
+	class Queue : public DataArea
 	{
 	public:
-		CQueue(void)
+		Queue(void)
 		{
 			
 		}
